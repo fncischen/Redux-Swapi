@@ -6,25 +6,31 @@ import { getCharacters }  from "../actions";
 // import actions
 
 class CharacterListView extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
   }
 
   componentDidMount() {
-    // call our action
+    console.log("Dispatch action!");
+    this.props.getCharacters;
   }
 
   render() {
-    if (this.props.fetching) {
+    console.log("Check props:", this.props);
+    if (this.props.fetching == true ) {
+      return (
       <div className="Fetching-Data">
       Fetching data!
       </div>
+      )
     }
+    else { 
     return (
       <div className="CharactersList_wrapper">
         <CharacterList characters={this.props.characters} />
       </div>
     );
+    }
   }
 }
 
@@ -32,17 +38,14 @@ class CharacterListView extends React.Component {
 
 // our mapStateToProps needs to have two properties inherited from state
 const mapStateToProps = state => {
+  console.log("This:", state);
   return {
     characters: state.characters,
     fetching: state.fetching
   }
 }
 
+console.log("MapStateToProps:", mapStateToProps);
+
 // the characters and the fetching boolean
-export default connect(
-  mapStateToProps, 
-  {
-    getCharacters
-    /* action creators go here */
-  }
-)(CharacterListView);
+export default connect(mapStateToProps, getCharacters )(CharacterListView);
